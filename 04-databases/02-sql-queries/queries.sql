@@ -1,22 +1,24 @@
----------------------------------------
+﻿---------------------------------------
 -- [THE BASICS]
 ---------------------------------------
 
 -- Get all sites
--- TODO: SELECT ...
+-- TODO: SELECT * FROM sites
 
 -- Get all sites sorted by name
--- TODO: SELECT ...
+-- SELECT * FROM sites ORDER BY name
 
 -- Gett all activity names sorted by name
--- TODO: SELECT ...
+-- SELECT * FROM activities ORDER BY name
+
 
 -- Get all "Sport" activities
--- TODO: SELECT ...
+-- SELECT * FROM activities WHERE category = 'Sport';
 -- Expected result: 8 rows
 
 -- Get all Escape Games in Nantes
--- TODO: SELECT ...
+-- SELECT * FROM activities WHERE name LIKE '%Escape Game%' AND city = 'Nantes'
+
 -- Expected result: 3 rows
 
 ---------------------------------------
@@ -24,15 +26,17 @@
 ---------------------------------------
 
 -- Count all the activities
--- TODO: SELECT ...
+-- SELECT COUNT(*) AS Total FROM activities
+
 -- Expected result: 44
 
 -- Count all "Adventure" activities
--- TODO: SELECT ...
+-- SELECT COUNT(*) AS Total FROM activities WHERE category = "Adventure"
 -- Expected result: 13
 
 -- Count the number of activities per category
--- TODO: SELECT ...
+-- SELECT category, COUNT(*) AS Total FROM activities GROUP BY category
+
 -- Expected result:
 -- category    total
 -- ----------  ----------
@@ -44,7 +48,8 @@
 -- Workshops   6
 
 -- Get the 3 category names with the biggest number of activities
--- TODO: SELECT ...
+-- SELECT category, COUNT(*) AS Total FROM activities GROUP BY category ORDER BY Total DESC
+LIMIT 3
 -- Expected result:
 -- category    total
 -- ----------  ----------
@@ -57,15 +62,32 @@
 ---------------------------------------
 
 -- Get all employee names working FROM site "Graslin", sorted by first name
--- TODO: SELECT ...
+
+SELECT * FROM employees 
+JOIN sites ON employees.site_id = sites.id 
+WHERE sites.name ='Graslin' 
+ORDER by employees.first_name
+
 -- Expected result: 53 rows
 
 -- Get all the activity names where you have been to, sorted by name
--- TODO: SELECT ...
+
+SELECT activities.name
+FROM team_building_sessions 
+JOIN activities ON team_building_sessions.activity_id = activities.id
+JOIN participations ON team_building_sessions.id = participations.team_building_session_id
+JOIN employees ON participations.employee_id = employees.id
+WHERE employees.last_name = "Levinson"
+
 -- Expected result: well, it depends on who you are :)
 
 -- [NEW KEYWORD] Get all the team names that have done an Adventure activity, sorted by names
--- TODO: SELECT ...
+-- SELECT DISTINCT teams.name
+FROM team_building_sessions 
+JOIN activities ON team_building_sessions.activity_id = activities.id
+JOIN participations ON team_building_sessions.id = participations.team_building_session_id
+JOIN teams ON team_building_sessions.team_id = teams.id
+WHERE activities.category = "Adventure"
 -- Expected result:
 -- name
 -- --------------------
