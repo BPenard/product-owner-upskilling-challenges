@@ -9,6 +9,15 @@
   </head>
   <body>
     <h1>Activities</h1>
-    <p>TODO: display all the activities</p>
+
+  <% @activities.each do |activity|%>
+    <p> <%= activity["name"] [ activity["Category"].upcase ]%>
+        Located in <%= activity["City"]%>
+        Duration of <%=activity["Duration"] %> minutes
+        For <%= activity["Number of participant"] %> participants
+        Charged <%= activity["Price"] %> €
+      ---
+    </p>
+  <% end %>
   </body>
 </html>
