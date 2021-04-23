@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Team Building - Activities</title>
+    <%= stylesheet '/style.css' %>
+  </head>
+
+  <body>
+    <h1>Hello world</h1>
+
+    <div class="hero" style="background-image: url(<%=@activity["photo_url"]%>)">>
+        <h1>
+          Team Building Activities
+          <small>Discover our activities</small>
+        </h1>
+    </div>
+
+
+    <ul>
+      <li><%= @activity ["name"]%></li>
+      <li><%= @activity ["category"]%></li>
+      <li><%= @activity ["city"]%></li>
+      <li><%= @activity ["duration"]%></li>
+      <li><%= @activity ["participant-count"]%></li>
+      <li><%= @activity ["price"]%></li>
+      <li><%= @activity ["photo_url"]%></li>
+    </ul>
+  </body>
+</html>

@@ -9,6 +9,52 @@
   </head>
   <body>
     <h1>Activities</h1>
-    <p>TODO: display all the activities</p>
+
+
+<a href="/?location="> All</a>
+<a href="/?location=Nantes"> Nantes</a>
+<a href="/?location=Paris"> Paris</a>
+
+
+    <div class="activity-cards-container">
+    <% @activities.each do |activity| %>
+
+        <div class="activity-card">
+          <div class="header">
+            <h2><%= activity["name"]  %></h2>
+            <span class="label label-primary category"><%= activity["category"]  %></span>
+
+          </div>
+          <div class="picture" style="background-image: url(<%=activity["photo_url"]%>)"></div>
+          <div class="activity-details">
+            <div class="sub-header">
+              <span class="city"><%= activity["city"]  %></span>
+              <span class="price"><%= activity["price"]  %></span>
+            </div>
+
+            <div class="details">
+              <ul>
+
+                <li class="duration">
+                  <span class="icon">⏱</span> <%= activity["duration"]  %> min
+                </li>
+
+                <li class="participants">
+                  <span class="icon">👥</span> <%= activity["participants_count"]  %> participants
+                </li>
+
+              </ul>
+              <div class="cta">
+              <a href= "/activities/<%= activity["id"]  %>" class="btn btn-bold btn-primary link">Discover</a>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+    <% end %>
+   </div>
   </body>
 </html>
