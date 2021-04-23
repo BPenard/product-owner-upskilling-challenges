@@ -23,8 +23,53 @@ get "/" do
 end
 
 namespace "/v1" do
-  # TODO: your code goes here
+  get "/activities" do
+    activities = DB.execute ("SELECT * FROM activities ORDER BY name")
+
+    json "activities" => activities
+  end
+
+  get "/activities/:id" do
+    activities = DB.execute ("SELECT * FROM activities WHERE id = #{params["id"]} ")
+
+    json "activities" => activities.first
+  end
+
 end
+
+namespace "/v2" do
+  get "/activities" do
+
+    city =params["city"]
+    category = params["category"]
+    search = params["search"]
+
+    if city != nil
+      activities = DB.execute ("SELECT * FROM activities WHERE lower(city) = '#{city.downcase}' " )
+
+
+    elsif category != nil
+      activities = DB.execute ("SELECT * FROM activities WHERE lower(category) = '#{category.downcase}' " )
+
+
+    elsif search != nil
+      activities = DB.execute ("SELECT * FROM activities WHERE lower(name) LIKE '%#{search.downcase}%' " )
+
+    else
+      activities = DB.execute ("SELECT * FROM activities ORDER BY name " )
+
+    end
+    json "activities" => activities
+  end
+
+  get "/activities/:id" do
+    activities = DB.execute ("SELECT * FROM activities WHERE id = #{params["id"]} ")
+
+    json "activities" => activities.first
+  end
+
+end
+
 
 namespace "/doc" do
   get { erb :"doc/index" }
